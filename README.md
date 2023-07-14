@@ -14,7 +14,7 @@ idea
 
 # project deatails
 
-*1.
+*1.takes a video input draws a green box around the face and write center or not centered simple (change the threshold accrodingly )
 
 *2.
 

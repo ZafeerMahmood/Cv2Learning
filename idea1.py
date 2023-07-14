@@ -7,6 +7,7 @@ def detect_movement_from_center(video_path):
 
     Args:
         video_path (str): Path to the video file.
+        video must be on local disk.
 
     Returns:
         None
@@ -19,7 +20,7 @@ def detect_movement_from_center(video_path):
     while True:
         ret, frame = video.read()
 
-        if not ret:
+        if not ret: # If the frame is not read correctly, 
             break
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -29,18 +30,18 @@ def detect_movement_from_center(video_path):
 
         # Draw rectangles around the detected faces and check if they are centered
         for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2) # Draw a rectangle around the face
 
             # Calculate the center coordinates of the face bounding box
             face_center_x = x + w // 2
             face_center_y = y + h // 2
 
             # Get the center coordinates of the video frame
-            frame_center_x = frame.shape[1] // 2
-            frame_center_y = frame.shape[0] // 2
+            frame_center_x = frame.shape[1] // 2 # width
+            frame_center_y = frame.shape[0] // 2 # y-coordinate
 
             # Check if the face is centered within a threshold
-            threshold = 50  # Adjust this value based on your requirement
+            threshold = 100  # Adjust this value based on your requirement
             if abs(face_center_x - frame_center_x) <= threshold and abs(face_center_y - frame_center_y) <= threshold:
                 cv2.putText(frame, 'Centered', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             else:
