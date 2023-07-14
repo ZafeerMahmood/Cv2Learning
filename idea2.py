@@ -14,7 +14,7 @@ def calculate_angle(a, b):
 
     return angle
 
-cap = cv2.VideoCapture('bike1.mp4')
+cap = cv2.VideoCapture('v11.mp4')
 
 # Setup mediapipe instance
 with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
@@ -35,13 +35,6 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
         # Extract landmarks
         try:
             landmarks = results.pose_landmarks.landmark
-
-            # Get coordinates
-            # shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-            #             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-            # hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
-            #        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-
 
             left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
                              landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
@@ -68,9 +61,12 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
                         (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
             # Check if back is straight or bent down
-            if angle < 160:
+            if angle < 85 or angle > 105:
                 cv2.putText(image, 'Warning: Back not straight!',
                             (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+            else:
+                cv2.putText(image, 'Back is straight',
+                            (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
         except:
             pass
