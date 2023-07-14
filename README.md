@@ -14,8 +14,9 @@ idea
 
 # project deatails
 
-1.takes a video input draws a green box around the face and write center or not centered simple (change the threshold accrodingly )
+1. takes a video input draws a green box around the face and write center or not centered simple (change the threshold accrodingly )
 
-2.draws landmark on person body and calculate if the back is straight or not then angles between (shoulder and hip)
+    ![screenshot1]()
 
-3.
+2. draws landmark on person body and calculate if the back is straight or not then angles between (shoulder and hip)
+    ![sreenshot2]()
