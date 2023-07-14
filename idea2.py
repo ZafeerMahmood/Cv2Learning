@@ -5,16 +5,12 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
-def calculate_angle(a, b, c):
-    a = np.array(a)  # First point
-    b = np.array(b)  # Mid point
-    c = np.array(c)  # End point
+def calculate_angle(a, b):
+    a = np.array(a)  # Shoulder
+    b = np.array(b)  # Hip
 
-    radians = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(a[1] - b[1], a[0] - b[0])
+    radians = np.arctan2(b[1] - a[1], b[0] - a[0])
     angle = np.abs(radians * 180.0 / np.pi)
-
-    if angle > 180.0:
-        angle = 360 - angle
 
     return angle
 
@@ -45,11 +41,9 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
                         landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
             hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
                    landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-            knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,
-                    landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
 
             # Calculate angle
-            angle = calculate_angle(shoulder, hip, knee)
+            angle = calculate_angle(shoulder, hip)
 
             # Visualize angle
             cv2.putText(image, f'Angle: {angle:.2f} degrees',
