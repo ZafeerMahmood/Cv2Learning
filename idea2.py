@@ -37,13 +37,31 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             landmarks = results.pose_landmarks.landmark
 
             # Get coordinates
-            shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-                        landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-            hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
-                   landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+            # shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+            #             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            # hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+            #        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
 
+
+            left_shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                             landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            right_shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                              landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+            left_hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                        landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+            right_hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x,
+                         landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+
+            # Calculate midpoints
+            shoulder_midpoint = [(left_shoulder[0] + right_shoulder[0]) / 2,
+                                 (left_shoulder[1] + right_shoulder[1]) / 2]
+            hip_midpoint = [(left_hip[0] + right_hip[0]) / 2,
+                            (left_hip[1] + right_hip[1]) / 2]
+
+
+        
             # Calculate angle
-            angle = calculate_angle(shoulder, hip)
+            angle = calculate_angle(shoulder_midpoint, hip_midpoint)
 
             # Visualize angle
             cv2.putText(image, f'Angle: {angle:.2f} degrees',
