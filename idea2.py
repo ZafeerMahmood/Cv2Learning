@@ -14,7 +14,7 @@ def calculate_angle(a, b):
 
     return angle
 
-cap = cv2.VideoCapture('v11.mp4')
+cap = cv2.VideoCapture('public/c2.mp4')
 
 # Setup mediapipe instance
 with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
