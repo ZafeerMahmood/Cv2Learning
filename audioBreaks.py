@@ -39,10 +39,12 @@ def break_wav(csv_file, wav_file):
                 prev_end_time = 0
 
                 # Iterate through each row in the CSV
+                i=1
                 for row in reader:
                     text = row[1]
 
-                    end_time = time_to_seconds(row[0])  
+                    end_time = time_to_seconds(row[0]) 
+                    end_time = end_time *2.173
                     print (end_time,'endtime')# Convert end time to seconds
                     if end_time is None:
                         print(f"Skipping invalid time value for row: {text}")
@@ -66,7 +68,8 @@ def break_wav(csv_file, wav_file):
                     frames = wav.readframes(frames_to_extract)
 
                     # Create an output WAV file for the split audio
-                    output_file = f"wav/output_{text}.wav"
+                    output_file = f"wav/{i}.wav"
+                    i+=1
                     with wave.open(output_file, 'wb') as split_wav:
                         split_wav.setparams(wav.getparams())
                         split_wav.writeframes(frames)
@@ -82,5 +85,5 @@ def break_wav(csv_file, wav_file):
 
 # Usage example
 csv_file = 'out.csv'
-wav_file = 'input_file.wav'
+wav_file = 'dummy0.wav'
 break_wav(csv_file, wav_file)
